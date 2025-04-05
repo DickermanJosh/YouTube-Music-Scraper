@@ -1,0 +1,39 @@
+<section class="songs-list">
+  <% if (!songs || songs.length === 0) { %>
+    <h2 class='nothing-found-msg'>Looks like there weren't any results...</h2>
+    <h2 class='nothing-found-msg'>Try searching for another artist.</h2>
+  <% } else { %>
+    <% for (let song of songs) { %>
+      <div class="song-item">
+          <% if (inModal === true) { %>
+            <!-- Form to add song to playlist -->
+            <form method="POST" action="/playlist/add/song">
+              <input type="hidden" name="playlistId" value="<%= playlistId %>">
+              <input type="hidden" name="youtubeId" value="<%= song.youtubeId %>">
+              <input type="hidden" name="title" value="<%= song.title %>">
+              <input type="hidden" name="artist" value="<%= song.artists[0].name %>">
+              <input type="hidden" name="album" value="<%= song.album %>">
+              <input type="hidden" name="durationInSeconds" value="<%= song.duration.totalSeconds %>">
+              <input type="hidden" name="releaseDate" value="<%= song.releaseDate %>">
+              <input type="hidden" name="artwork" value="<%= song.thumbnailUrl %>">
+              <button type="submit" class="modal-song song-link">
+                <img src="<%= song.thumbnailUrl %>" alt="Thumbnail for <%= song.title %>" class="song-thumbnail">
+                <div class="song-details">
+                  <h4><%= song.title %></h4>
+                  <p>By <%= song.artists[0].name %></p>
+                </div>
+              </button>
+            </form>
+          <% } else { %>
+          <a href="/song-info?songTitle=<%= song.title %>&artistName=<%= song.artists[0].name %>&youtubeId=<%= song.youtubeId %>" class="song-link">
+              <img src="<%= song.thumbnailUrl %>" alt="Thumbnail for <%= song.title %>" class="song-thumbnail">
+              <div class="song-details">
+                <h4><%= song.title %></h4>
+                <p>By <%= song.artists[0].name %></p>
+              </div>
+            </a>
+          <% } %>
+      </div>
+    <% } %>
+  <% } %>
+</section>

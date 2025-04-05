@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+  <%- include('partials/favicon') %>
+  <%- include('partials/bootstrap') %>
+  <%- include('partials/fontawesome') %>
+  <link href="/css/style.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+  <%- include('partials/header') %>
+  <%- include('partials/nav') %>
+
+    <!-- Playlist Information -->
+    <% if (playlist.length === 0) { %> 
+      <h3 class='center-text'> Playlist not found! </h3>
+    <% } else { %>
+      <h2 class='center-text'> Current Name: <%= playlist[0].PlaylistName %> </h2>
+      <h4 class='center-text'> Likes: <%= playlist[0].Likes %> </h4>
+      <h4 class='center-text'> Created On: <%= new Date(playlist[0].CreationDate).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' }) %> </h4>
+
+      <h4 class='center-text'> Visibility: <%= playlist[0].Public === 1 ? 'Public' : 'Private' %> </h4>
+    <% } %>
+      
+    <div class='flexbox'>
+      <form class="update-pl-name-form"  action="/playlist/update/name" method="post">
+          <% if (locals.error) { %>
+            <p class="error-msg"><%= locals.error %></p>
+          <% } %>
+
+          <label for="playlistName">Update Playlist Name:</label>
+          <input type="text" name="new-name" id="playlistName" required>
+          <input type="hidden" name="playlistId" value="<%= playlist[0].PlaylistID %>">
+
+          <input type="submit" value="Update Name">
+      </form>
+    </div>
+ 
+  <div class='flexbox'>
+    <form class="update-pl-name-form"  action="/playlist/update/visibility" method="post">
+        <% if (locals.error) { %>
+          <p class="error-msg"><%= locals.error %></p>
+        <% } %>
+
+        <input type="hidden" name="playlistId" value="<%= playlist[0].PlaylistID %>">
+        <label for="isPublic">Update Visibility:</label>
+        <select name="isPublic" id="isPublic">
+            <option value="1" <% if (playlist[0].Public === 1) { %>selected<% } %>>Public</option>
+            <option value="0" <% if (playlist[0].Public === 0) { %>selected<% } %>>Private</option>
+        </select>
+
+        <input type="submit" value="Update Public Status">
+    </form>
+  </div>
+      
+        <p class='center-text'> Add Song: <i class="fa-solid fa-plus" data-bs-toggle="modal" data-bs-target="#addSongModal"></i> </p>
+
+    <div class='flexbox'>
+      <form action='/playlist/delete' method='post'>
+        <input type="hidden" name="playlistId" value="<%= playlist[0].PlaylistID %>">
+        <p>Delete This Playlist?</p>
+        <input type="submit" value="Delete Playlist">
+      </form>
+    </div>
+
+
+    <!-- Songs in Playlist -->
+    <% if (songs.length !== 0) { %>
+        <section class="songs-list">
+          <% if (!songs || songs.length === 0) { %>
+            <h2 class='nothing-found-msg'>Looks like there weren't any results...</h2>
+            <h2 class='nothing-found-msg'>Try searching for another artist.</h2>
+          <% } else { %>
+            <% for (let song of songs) { %>
+              <div class="song-item">
+                  <a href="/song-info?songTitle=<%= song.Title %>&artistName=<%= song.Artist %>&youtubeId=<%= song.YoutubeID %>" class="song-link">
+                  <img src="<%= song.Artwork %>" alt="Thumbnail for <%= song.Title %>" class="song-thumbnail">
+                  <div class="song-details">
+                    <h4><%= song.Title %></h4>
+                    <p>By <%= song.Artist %></p>
+                  </div>
+                </a>
+                <!-- Delete Song Form -->
+                <form action="/playlist/delete/song" method="post" style="display: inline;">
+                  <input type="hidden" name="playlistId" value="<%= playlist[0].PlaylistID %>">
+                  <input type="hidden" name="songTitle" value="<%= song.Title %>">
+                  <input type="hidden" name="artistName" value="<%= song.Artist %>">
+                  <button type="submit" class="btn btn-link" aria-label="Delete Song">
+                    <i class="fas fa-trash-alt"></i>
+                  </button>
+                </form>
+              </div>
+            <% } %>
+          <% } %>
+        </section>
+    <% } %>
+
+        <!-- Search song to add Modal -->
+        <div class="modal fade" id="addSongModal" tabindex="-1" aria-labelledby="addSongModalLabel" aria-hidden="true">
+          <div class="modal-dialog">
+            <div class="modal-content">
+              <div class="modal-header">
+                <h5 class="modal-title" id="addSongModalLabel">Add Song</h5>
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div class="modal-body">
+                <!-- Search Song Form -->
+                <form id="modalSearchForm" class="form-inline" method="get">
+                  <input id="modalSongInput" name='song-name' class='form-control mr-sm-2' type='text' placeholder='Song Name' required>
+                  <input id="modalArtistInput" name='artist-name' class='form-control mr-sm-2' type='text' placeholder='Artist Name'>
+                  <input type="hidden" name="playlistId" value="<%= playlist[0].PlaylistID %>" id="modalPlaylistId">
+                  <button class='btn btn-outline-success my-2 my-sm-0' type='submit'>Search</button>
+                </form>
+                <!-- Container for search results -->
+                <div id="searchResults" class="search-results"></div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+  <script src="/js/search.js"></script>
+  <script src="/js/login.js"></script>
+</body>
+</html>
+
+

@@ -1,0 +1,426 @@
+html {
+  width: 100%;
+  height: 100%;
+}
+
+body {
+    min-height: 100vh;
+    background: linear-gradient(to bottom, #1F1F1F, #0D0F10);
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: white;
+}
+
+header {
+  text-align: center;
+  background-color: #1F1F1F;
+  color: white;
+  padding-top: 15px;
+  padding-bottom: 15px;
+}
+
+.navbar-bg-custom {
+  background-color: #0D0F10;
+}
+
+.navbar-custom-border {
+  border: 2px, solid white; 
+}
+
+.navbar-nav .nav-link {
+  color: #ffffff;
+}
+
+.navbar-nav .nav-link.active, 
+.navbar-nav .nav-link:hover {
+  color: lightgray;
+}
+
+.navbar-brand {
+  color: white;
+}
+
+.navbar-toggler { 
+  display: block; 
+  border-color: lightgray;
+}
+
+@media (max-width: 991px) { /* Keep the form collapsed on smaller screens */
+  .navbar-collapse {
+    display: none; 
+  }
+}
+
+#searchForm {
+  display: flex;
+  justify-content: right;
+  gap: 10px;
+}
+
+.right-flexbox {
+  display: flex;
+  justify-content: right;
+  gap: 10px;
+}
+
+#songInput, #artistInput {
+  max-width: 150px;
+}
+
+/* .btn-outline-success {
+  padding: 5px 10px;
+} */
+
+#sign-in-btn {
+  text-align: right;
+  margin: 0;
+  padding: 5px 10px;
+}
+
+#header-text {
+  text-align: center;
+  text-shadow: 10px solid gray;
+}
+
+.flexbox {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0;
+  gap: 25px;
+}
+
+.flexbox-container {
+  display: flex;
+  padding-left: 5%;
+  align-items: center;
+  gap: 15px;
+}
+
+.info-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.song-info-container {
+  display: flex;
+  align-items: flex-start;
+  padding: 20px;
+  gap: 15px;
+}
+
+/* The leftmost column for image and video */
+.media-column {
+  flex: 0 1 auto;
+  max-width: 840px;
+  padding-left: 2%;
+  padding-right: 15px;
+}
+
+/* The middle column for song details */
+.details-column {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: left;
+  min-width: 450px;
+  max-width: 1000px;
+}
+
+/* The rightmost column for lyrics */
+.lyrics-column {
+  flex: 2;
+  padding-left: 0.5%;
+}
+
+.youtube-video-container {
+  position: relative;
+  padding-bottom: 56.25%; /* 16:9 Aspect Ratio */
+  height: 0;
+}
+
+.youtube-video-container iframe {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}
+
+.lyrics-container {
+  flex-grow: 1;
+  margin-left: 20px;
+}
+
+
+.center-form {
+  margin: 0;
+  text-align: center;
+  border-radius: 12px;
+  border: 3px solid white;
+}
+
+.grid-container {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+  padding: 20px;
+}
+
+.grid-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.grid-item-link {
+  text-decoration: none;
+  color: inherit;
+}
+
+.grid-item img {
+  width: 100%;
+  max-width: 200px;
+  height: auto;
+  border-radius: 10px;
+}
+
+.grid-text-item {
+  text-align: center;
+  margin: 5px 0;
+}
+
+.album-info {
+  text-align: center;
+  margin-bottom: 20px;
+}
+.album-art {
+  width: 450px;
+  height: auto;
+  border-radius: 10px;
+  margin-bottom: 15px;
+}
+.songs-list {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  margin: 0 auto;
+  width: 80%;
+}
+.song-row {
+  text-align: center;
+  margin: 10px 0;
+  padding: 10px;
+  width: 100%;
+}
+.song-row a {
+  text-decoration: none;
+  color: white;
+  font-size: 16px;
+}
+.song-row a span {
+  margin-right: 10px;
+}
+
+
+.artists-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.artist-item {
+  margin: 20px;
+  padding: 10px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 500px;
+}
+.artist-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+.artist-thumbnail {
+  width: 50px;
+  height: auto;
+  margin-right: 20px;
+  border-radius: 50%;
+}
+
+.artist-thumbnail-result {
+  max-width: 50px;
+  min-width: 50px;
+  height: auto;
+  border-radius: 50%;
+  margin-right: 20px;
+}
+
+.artist-details h4, .artist-details p {
+  margin: 0;
+}
+
+form {
+  padding: 10px;
+}
+
+input {
+  background-color: #282828;
+  color: white;
+  border-radius: 4px;
+  border: 2px solid black;
+  margin-bottom: 15px;
+}
+
+#artist-button {
+  text-align: center;
+  border-radius: 12px;
+  border: 3px solid black;
+  font-size: 18px;
+  background-color: #282828;
+  color: white;
+  padding-left: 35px;
+  padding-right: 35px;
+}
+
+.search-button {
+  text-align: center;
+  border: 1px solid black;
+  font-size: 18px;
+  border-radius: 4px;
+  background-color: #282828;
+  color: white;
+  padding-left: 25px;
+  padding-right: 25px;
+}
+
+.songs-list {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px;
+}
+
+.song-item {
+  margin: 20px;
+  padding: 10px;
+  border: 2px solid #ddd;
+  border-radius: 8px;
+  width: 80%;
+  max-width: 500px;
+  background: #1F1F1F;
+}
+
+.song-link {
+  display: flex;
+  align-items: center;
+  text-decoration: none;
+  color: inherit;
+}
+
+.song-thumbnail {
+  width: 100px;
+  height: 100px;
+  margin-right: 20px;
+  border-radius: 4px;
+}
+
+.song-details h4, .song-details p {
+  margin: 0;
+}
+
+.center-align-text {
+  text-align: center;
+}
+
+.artist-art {
+  width: 25%;
+  height: auto;
+  min-width: 25%;
+  max-width: 25%;
+  border-radius: 14px;
+  box-sizing: border-box;
+  border: 5px black;
+  padding-right: 25px;
+}
+
+.artist-header {
+  display: flex;
+  align-items: center;
+  padding: 25px;
+}
+
+.artist-thumbnail {
+  max-width: 400px;
+  margin-right: 20px;
+}
+
+.artist-info {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.artist-name {
+  margin-bottom: 10px;
+}
+
+.artist-description,
+.artist-subscribers {
+  margin: 5px 0;
+}
+
+.nothing-found-msg {
+  color: gray;
+  text-align: center;
+  text-shadow: 8px #282828;
+}
+
+
+.suggested-artists-container {
+  overflow: hidden;
+  margin-left: 100px;
+  margin-right: 100px;
+  margin-top: 100px;
+}
+
+.suggested-artists-scroll {
+  display: flex;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  scroll-snap-type: x mandatory;
+  gap: 15px;
+  padding: 10px;
+}
+
+.artist-card {
+  flex: 0 0 auto;
+  width: 120px;
+  text-align: center;
+  scroll-snap-align: start;
+  text-decoration: none;
+  color: currentColor;
+}
+
+.artist-thumbnail {
+  width: 100%;
+  border-radius: 8px;
+}
+
+.artist-name {
+  display: block;
+  margin-top: 8px;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+}
+
+.center-text {
+  text-align: center;
+}
+
+.red-text {
+  color: red;
+}

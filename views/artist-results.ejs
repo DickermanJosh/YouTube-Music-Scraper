@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Search Artists</title>
+  <%- include('partials/favicon') %>
+  <%- include('partials/bootstrap') %>
+  <link href="/css/style.css" rel="stylesheet" type="text/css" />
+</head>
+  <body>
+    <%- include('partials/header') %>
+    <%- include('partials/nav') %>
+
+    <section class="artists-list">
+      <% if (!artists || artists.length === 0) { %>
+        <h2 class='nothing-found-msg'>Looks like there weren't any results...</h2>
+        <h2 class='nothing-found-msg'>Try searching for another artist.</h2>
+      <% } else { %>
+        <% for (let artist of artists) { %>
+          <div class="artist-item">
+            <a href="/artist-info?artist=<%= artist.name %>" class="artist-link">
+              <img src="<%= artist.thumbnailUrl %>" alt="<%= artist.name %>" class="artist-thumbnail-result">
+              <div class="artist-details">
+                <h4><%= artist.name %></h4>
+                <p><%= artist.subscribers %></p>
+              </div>
+            </a>
+          </div>
+        <% } %>
+      <% } %>
+    </section>
+    <script src="/js/search.js"></script>
+  </body>
+</html>

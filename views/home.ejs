@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+  <%- include('partials/favicon') %>
+  <%- include('partials/bootstrap') %>
+    <link href="/css/style.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+  <%- include('partials/header') %>
+  <%- include('partials/nav') %>
+
+  
+  <!-- DISPLAY SUGGESTED ARTISTS -->
+  <div class="suggested-artists-container">
+    <h2 class='center-align-text'>Suggested Artists</h2>
+    <div class="suggested-artists-scroll">
+      <% for (let artist of artistSuggestions) { %>
+        <a href="/artist-info?artist=<%= artist.name %>" class="artist-card">
+           <img src="<%= artist.thumbnailUrl %>" alt="<%= artist.name %>" class="artist-thumbnail">
+          <span class="artist-name"><%= artist.name %></span>
+        </a>
+      <% } %>
+    </div>
+  </div>
+
+  <!-- DISPLAY PUBLIC PLAYLISTS -->
+  <section>
+    <% if (publicPlaylists.length > 0) { %>
+      <!-- TODO: Make a new container for playlists -->
+      <div class="suggested-artists-container">
+      <h2 class='center-align-text'>Popular Public Playlists</h2>
+        <div class="suggested-artists-scroll">
+       <% for (let pl of publicPlaylists) { %>
+        <a href='/playlists/view/<%= pl.PlaylistID %>'>
+          <h5> <%= pl.PlaylistName %> </h5>
+           </a>
+         <p>Likes: <%= pl.Likes %> </p>
+      <% } %>
+    <% } else { %>
+           <h4> Looks like you don't have any playlists, create a new one now!</h4>
+      <% } %>
+      </div>
+    </div>
+  </section>
+        
+  <script src="/js/search.js"></script>
+  <script src="/js/login.js"></script>
+</body>
+</html>

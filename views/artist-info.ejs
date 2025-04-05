@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>View Artist</title>
+  <%- include('partials/favicon') %>
+  <%- include('partials/bootstrap') %>
+  <%- include('partials/fontawesome') %>
+  <link href="/css/style.css" rel="stylesheet" type="text/css" />
+  <link href="/css/stars.css" rel="stylesheet" type="text/css" />
+</head>
+  <body>
+  <%- include('partials/header') %>
+  <%- include('partials/nav') %>
+
+
+    <div class="artist-header">
+      <img src="<%= thumbnail %>" alt="<%= artistInfo.name %>" class="artist-art">
+      <div class="artist-info">
+        <h1 class="artist-name"><%= artistInfo.name %></h1>
+
+        <!-- Favorite Icons -->
+        <% if (user) { %>
+          <input type="hidden" id="userId" value="<%= user.id %>">
+          <input type="hidden" id="name" value="<%= artistInfo.name %>">
+          <input type="hidden" id="api_id" value="<%= artistInfo.artistId %>">
+          <input type="hidden" id="bio" value="<%= artistInfo.description %>">
+          <input type="hidden" id="artwork" value="<%= thumbnail %>">
+          <% if (!isFavorited)  { %>
+            <i id='favorite-star' class="star-style fa fa-regular fa-star" aria-hidden="true"></i> <!-- For a hollow star -->
+          <% } else { %>
+            <i id='favorite-star' class="star-style fa fa-star" aria-hidden="true"></i> <!-- For a filled star -->
+          <% } %>
+        <% } %>
+        
+        <p class="artist-description"><%= artistInfo.description %></p>
+        <p class="artist-subscribers"><strong>Followers:</strong> <%= artistInfo.subscribers %></p>
+      </div>
+    </div>
+
+    <section>
+      <h2 class='center-align-text'>Albums</h2>
+       <div class="grid-container">
+         <% for (let album of artistInfo.albums) { %>
+           <a href="/album-info?albumTitle=<%= album.title %>&artistName=<%= artistInfo.name %>" class="grid-item-link">
+             <div class="grid-item">
+                <img src="<%= album.thumbnailUrl %>" alt="<%= album.title %>">
+                <h4 class='grid-text-item'><%= album.title %></h4>
+                <p class='grid-text-item'><%= album.year %></p>
+              </div>
+            </a>
+          <% } %>
+        </div>
+    </section>
+
+    <section>
+      <h2 class='center-align-text'>Singles</h2>
+        <div class="grid-container">
+            <% for (let single of artistInfo.singles) { %>
+              <a href="/song-info?songTitle=<%= single.title %>&artistName=<%= artistInfo.name %>" class="grid-item-link">
+                <div class="grid-item">
+                  <img src="<%= single.thumbnailUrl %>" alt="<%= single.title %>">
+                  <h4 class='grid-text-item'><%= single.title %></h4>
+                  <p class='grid-text-item'><%= single.year %></p>
+                </div>
+              </a>
+            <% } %>
+        </div>
+    </section>
+    <script src="/js/search.js"></script>
+    <script src="/js/favoriteArtist.js"></script>
+ </body>
+</html>

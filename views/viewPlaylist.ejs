@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+  <%- include('partials/favicon') %>
+  <%- include('partials/bootstrap') %>
+  <%- include('partials/fontawesome') %>
+  <link href="/css/style.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+  <%- include('partials/header') %>
+  <%- include('partials/nav') %>
+
+  <% if (playlistInfo.length === 0) { %> 
+    <h3 class='center-text'> Playlist not found! </h3>
+  <% } else { %>
+    <!-- Playlist Information -->
+    <h2 class='center-text'> <%= playlistInfo.PlaylistName %> </h2>
+    <h4 class='center-text'> Likes: <%= playlistInfo.Likes %> </h4>
+    <h4 class='center-text'> Created On: <%= new Date(playlistInfo.CreationDate).toLocaleDateString("en-US", { year: 'numeric', month: 'long', day: 'numeric' }) %> </h4>
+    <h4 class='center-text'> Visibility: <%= playlistInfo.Public === 1 ? 'Public' : 'Private' %> </h4>
+    
+    <% if (typeof user !== 'undefined' && user) { %>
+      <!-- Edit icon (Only available to playlist owner) -->
+      <% if (user.id === playlistInfo.UserID) { %>
+        <a href='/playlist/edit/<%= playlistInfo.PlaylistID %>' title="Edit Playlist">
+          <p class='center-text'>Edit Your Playlist: <i class="fa fa-edit"></i> </p>
+
+        </a>
+      <% } else { %>
+        <!-- Like Icon -->
+        <div>
+          <input type="hidden" id="userId" value="<%= user.id %>">
+          <input type="hidden" id="playlistId" value="<%= playlistInfo.PlaylistID %>">
+          <% if (isLiked == 'true') { %>
+            <p class='center-text'><i id="thumbs-up" class="fa fa-thumbs-up" aria-hidden="true"></i></p>
+          <% } else { %>
+            <p class='center-text'><i id="thumbs-up" class="fa fa-thumbs-up fa-regular" aria-hidden="true"></i></p>
+          <% } %>
+        </div>
+      <% } %>
+    <% } %>
+  <% } %>
+
+  <!-- Songs in Playlist -->
+  <% if (songs.length !== 0) { %>
+      <section class="songs-list">
+        <% if (!songs || songs.length === 0) { %>
+          <h2 class='nothing-found-msg'>Looks like there weren't any results...</h2>
+          <h2 class='nothing-found-msg'>Try searching for another artist.</h2>
+        <% } else { %>
+          <% for (let song of songs) { %>
+            <div class="song-item">
+                <a href="/song-info?songTitle=<%= song.Title %>&artistName=<%= song.Artist %>&youtubeId=<%= song.YoutubeID %>" class="song-link">
+                <img src="<%= song.Artwork %>" alt="Thumbnail for <%= song.Title %>" class="song-thumbnail">
+                <div class="song-details">
+                  <h4><%= song.Title %></h4>
+                  <p>By <%= song.Artist %></p>
+                </div>
+              </a>
+            </div>
+          <% } %>
+        <% } %>
+      </section>
+  <% } %>
+
+
+  <script src="/js/search.js"></script>
+  <script src="/js/login.js"></script>
+ <script src="/js/likePlaylist.js"></script>
+</body>
+</html>
+
+

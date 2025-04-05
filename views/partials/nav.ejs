@@ -1,0 +1,84 @@
+<link href="/css/loginModal.css" rel="stylesheet" type="text/css" />
+<nav class="navbar navbar-bg-custom navbar-custom-border">
+  <div class="container-fluid">
+    <div class='navbar-left'>
+      
+    <a class="navbar-brand" href="/">Home</a>
+    <% if (user) { %>
+      <a class="navbar-brand" href="/user/profile">Profile</a>
+    <% } %>
+    </div>
+    <!-- <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button> -->
+      <ul class="navbar-nav ml-auto">
+        <li class="nav-item">
+          <!-- Search Form -->
+          <form id="searchForm" class="form-inline" method="get">
+            <input id="songInput" name='song-name' class='form-control mr-sm-2' type='text' placeholder='Song Name'/>
+            <input id="artistInput" name='artist-name' class='form-control mr-sm-2' type='text' placeholder='Artist Name'/>
+            <button class='btn btn-outline-success my-2 my-sm-0' type='submit'>Search</button>
+          </form>
+        </li>
+        <% if (!user) { %>
+          <li class="nav-item">
+            <div class='right-flexbox'>
+              <!-- Login Button -->
+              <button type="button" class="btn btn-outline-success my-2 my-sm-0" data-bs-toggle="modal" data-bs-target="#loginModal">
+                Login
+              </button>
+            </div>
+          </li>
+        <% } else { %>
+          <li class='nav-item'>
+            <div class='right-flexbox'>
+              <form action='/user/logout' method='get'>
+                <button class='btn btn-outline-success my-2 my-sm-0' type='submit'>Sign Out</button>
+              </form>
+            </div>
+          </li>
+        <% } %>
+      </div>
+        
+      <!--
+        <li class="nav-item">
+          <div class='right-flexbox'>
+          <button id='sign-in-btn' class='btn btn-outline-success my-2 my-sm-0'>Sign In</button>
+
+        </li> -->
+      </ul>
+    <!-- <div class="collapse navbar-collapse" id="navbarNav">
+
+    </div> -->
+      
+  </div>
+</nav>
+
+
+          <!-- Login Modal -->
+          <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
+            <div class="modal-dialog">
+              <div class="modal-content logic-modal">
+                <div class="modal-header">
+                  <h5 class="modal-title" id="loginModalLabel">Login</h5>
+                  <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                  <!-- Login Form -->
+                  <form id="loginForm" action="/user/login" method="POST">
+                    <div class="mb-3">
+                      <label for="username" class="form-label">Username</label>
+                      <input type="text" class="form-control" id="username" name="username" placeholder="Username" required>
+                    </div>
+                    <div class="mb-3">
+                      <label for="password" class="form-label">Password</label>
+                      <input type="password" class="form-control" id="password" name="password" placeholder="Password" required>
+                    </div>
+                    <p id='login-warning' class='center-text red-text'>  </p>
+                    <button type="submit" class="btn btn-primary">Login</button>
+                  </form>
+                  <button id="showSignUp" class="btn btn-secondary mt-3">Create New Account</button>
+                </div>
+              </div>
+            </div>
+          </div>

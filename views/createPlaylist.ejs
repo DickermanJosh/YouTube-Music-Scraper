@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+  <%- include('partials/favicon') %>
+  <%- include('partials/bootstrap') %>
+  <%- include('partials/fontawesome') %>
+  <link href="/css/style.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+  <%- include('partials/header') %>
+  <%- include('partials/nav') %>
+
+    <div class='flexbox'>
+      <form class="create-playlist-form" method="post">
+          <% if (locals.error) { %>
+            <p class="error-msg"><%= locals.error %></p>
+          <% } %>
+
+          <label for="playlistName">Playlist Name:</label>
+          <input type="text" name="playlistName" id="playlistName" required>
+
+          <label class="form-check-label" for="isPublic">
+            Make Playlist Public:
+          </label>
+          <input class="form-check-input" type="checkbox" id="isPublic">
+
+
+          <input type="submit" value="Create Playlist">
+      </form>
+    </div>
+
+
+  <script src="/js/search.js"></script>
+  <script src="/js/login.js"></script>
+  <script src="/js/createPlaylistForm.js"></script>
+</body>
+</html>

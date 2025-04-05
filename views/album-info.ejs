@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Album Info</title>
+  <%- include('partials/favicon') %>
+  <%- include('partials/bootstrap') %>
+  <link href="/css/style.css" rel="stylesheet" type="text/css" />
+</script>
+</head>
+<body>
+  <%- include('partials/header') %>
+  <%- include('partials/nav') %>
+  <section class="album-info">
+      <img src="<%= albumInfo.thumbnailUrl %>" alt="<%= albumInfo.title %> Album Art" class="album-art">
+      <h1><%= albumInfo.title %></h1>
+      <h2>By <%= albumInfo.artist %> (<%= albumInfo.year %>)</h2>
+  </section>
+
+  <section class="songs-list">
+      <% for (let song of albumSongs) { %>
+        <div class="song-row">
+          <a href="/song-info?songTitle=<%= encodeURIComponent(song.title) %>&artistName=<%= encodeURIComponent(albumInfo.artist) %>&youtubeId=<%= song.youtubeId %>">
+            <span><%= song.title %></span> - <span><%= song.duration.label %></span>
+          </a>
+        </div>
+      <% } %>
+  </section>
+  <script src="/js/search.js"></script>
+ </body>
+</html>
+

@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Home</title>
+  <%- include('partials/favicon') %>
+  <%- include('partials/bootstrap') %>
+  <%- include('partials/fontawesome') %>
+  <link href="/css/style.css" rel="stylesheet" type="text/css" />
+
+</head>
+
+<body>
+  <%- include('partials/header') %>
+  <%- include('partials/nav') %>
+
+  <!-- CREATE NEW PLAYLIST -->
+  <h2 class='center-text'> Your Playlists</h2>
+  <a href='/playlist/create' class='center-text'>
+    <p class='center-text'>Create New Playlist: <i class="fa-solid fa-plus"></i></p>
+  </a>
+  
+  <!-- DISPLAY CREATED PLAYLISTS -->
+  <section>
+    <% if (playlists.length > 0) { %>
+      <% for (let pl of playlists) { %>
+        <a href='/playlists/view/<%= pl.PlaylistID %>' class='center-text'>
+          <h5> <%= pl.PlaylistName %> </h5>
+          </a>
+      <% } %>
+    <% } else { %>
+          <h4 class='center-text'> Looks like you don't have any playlists, create a new one now!</h4>
+      <% } %>
+  </section>
+
+  <!-- DISPLAY FAVORITE ARTISTS -->
+  <section>
+    <% if (favArtists.length > 0) { %>
+      <h2 class='center-text'> Your Favorite Artists </h2>
+      <div class="grid-container">
+      <% for (let artist of favArtists) { %>
+        <a href="/artist-info?artist=<%= artist.Name %>" class="grid-item-link">
+         <div class="grid-item">
+            <img src="<%= artist.Artwork %>" alt="<%= artist.API_ID %>">
+            <h4 class='grid-text-item'><%= artist.Name %></h4>
+          </div>
+        </a>
+      <% } %>
+      </div>
+    <% } %>
+  </section>
+
+  <!-- DISPLAY FAVORITE SONGS -->
+  <section>
+    <% if (favSongs.length > 0) { %>
+      <h2 class='center-text'> Your Favorite Songs </h2>
+      <div class="grid-container">
+      <% for (let song of favSongs) { %>
+        <a href="/song-info?songTitle=<%= song.Title %>&artistName=<%= song.Artist %>&youtubeId=<%= song.YouTubeID %>" class="grid-item-link">
+          <div class="grid-item">
+            <img src="<%= song.Artwork %>" alt="<%= song.YoutubeID %>">
+            <h4 class='grid-text-item'><%= song.Title %></h4>
+            <h6 class='grid-text-item'><%= song.Artist %></h6>
+            <p class='grid-text-item'>Length: <%= song.DurationInSeconds %>s</p>
+           </div>
+        </a>
+      <% } %>
+      </div>
+    <% } %>
+  </section>
+
+  <script src="/js/search.js"></script>
+  <script src="/js/login.js"></script>
+</body>
+</html>

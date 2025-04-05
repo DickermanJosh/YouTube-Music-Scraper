@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Play Song</title>
+  <%- include('partials/favicon') %>
+  <%- include('partials/bootstrap') %>
+    <%- include('partials/fontawesome') %>
+  <link href="/css/style.css" rel="stylesheet" type="text/css" />
+  <link href="/css/stars.css" rel="stylesheet" type="text/css" />
+</head>
+  <body>
+    <%- include('partials/header') %>
+    <%- include('partials/nav') %>
+
+    <div class="song-info-container">
+      <!-- Song media, eg: artwork, YT video -->
+      <div class="media-column">
+        <img class='album-art' src="<%= songInfo.artwork %>"/>
+        <div class="youtube-video-container">
+          <iframe src="https://www.youtube.com/embed/<%= youtubeId %>" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+        </div>
+      </div>
+      <!-- Song info, eg: title, artist, genre -->
+      <div class="details-column">
+        <div class="info">
+          <h2 id="title-text">Title:</h2>
+          <h3 id="song-title-text"><%= songInfo.title %></h3>
+        </div>
+        <div class="info">
+          <h2 id="artist-text">Artist:</h2>
+          <h3 id="artist-name-text"><%= songInfo.artist %></h3>
+        </div>
+        <div class="info">
+          <h2 id="genre-text">Genre:</h2>
+          <h3 id="genre-name-text"><%= songInfo.genre %></h3>
+        </div>
+        <form action="/artist-info" method="get">
+          <input type="hidden" name="artist" value="<%= songInfo.artist %>">
+          <button id='artist-button' type="submit">View Artist</button>
+        </form>
+        
+        <!-- Icon to select favorite -->
+        <% if (user) { %>
+          <input type="hidden" id="userId" value="<%= user.id %>">
+          <input type="hidden" id="youtubeId" value="<%= youtubeId %>">
+          <input type="hidden" id="title" value="<%= songInfo.title %>">
+          <input type="hidden" id="artist" value="<%= songInfo.artist %>">
+          <input type="hidden" id="album" value="<%= songInfo.album %>">
+          <input type="hidden" id="genre" value="<%= songInfo.genre %>">
+          <input type="hidden" id="time" value="<%= songInfo.lengthMilliSec %>">
+          <input type="hidden" id="releaseDate" value="<%= songInfo.releaseDate %>">
+          <input type="hidden" id="artwork" value="<%= songInfo.artwork %>">
+          <% if (!isFavorited)  { %>
+            <i id='favorite-star' class="star-style fa fa-regular fa-star" aria-hidden="true"></i> <!-- For a hollow star -->
+          <% } else { %>
+            <i id='favorite-star' class="star-style fa fa-star" aria-hidden="true"></i> <!-- For a filled star -->
+          <% } %>
+        <% } %>
+      </div>
+      <!-- Song lyrics -->
+      <div class="lyrics-column">
+        <h3> Lyrics: </h3>
+        <p> <%- songLyrics %> </p>
+      </div>
+    </div>
+    <script src="/js/search.js"></script>
+    <script src="/js/login.js"></script>
+    <script src="/js/favoriteSong.js"></script>
+  </body>
+
+
+</html>
