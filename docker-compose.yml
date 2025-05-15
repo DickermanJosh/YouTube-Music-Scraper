@@ -1,0 +1,25 @@
+services:
+  yt-music-scraper:
+    build: .
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    depends_on:
+      - mysql
+
+  mysql:
+    image: mysql:8.0
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    env_file:
+      - .env
+    volumes:
+      - ./db-init:/docker-entrypoint-initdb.d
+      - mysql_data:/var/lib/mysql
+    ports:
+      - "3006:3006"
+
+volumes:
+  mysql_data:
+    driver: local

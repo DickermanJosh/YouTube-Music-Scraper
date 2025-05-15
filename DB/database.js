@@ -5,10 +5,10 @@ import mysql from 'mysql';
  */
 const pool = mysql.createPool({
   connectionLimit: 10,
-  host: "d6vscs19jtah8iwb.cbetxkdyhwsb.us-east-1.rds.amazonaws.com",
-  user: "h43xi0khx6h7wrd4",
+  host: process.env['DB_HOST'],
+  user: process.env['MYSQL_USER'],
   password: process.env['DB_PASSWORD'],
-  database: "nx9skm9wgye6fpo1",
+  database: process.env['MYSQL_DATABASE'],
 });
 
 export async function executeSQL(sql, params) {
