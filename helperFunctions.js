@@ -144,17 +144,20 @@ class Helper {
 
   /**
    * Function to replace js line breaks with HTML line breaks <br>
-   * As well as remove the first line from the API returned lyrics as they are
-   * not wanted.
+   * Also clean up extra whitespace and formatting.
    *
    * @param: A string of lyrics to convert for HTML
-   * returns - HTML formatted / trimmed lyric string
+   * returns - HTML formatted lyric string
    */
   static formatLyrics(str) {
-    // The first line returned by the API needs to be trimmed
-    const index = str.indexOf("\n");
-    str = str.substring(index + 1);
-    // Replacing every \n with a <br>
+    if (!str) return "No lyrics available";
+    
+    // Clean up \r characters and excessive spacing
+    str = str.replace(/\r/g, "");
+    str = str.replace(/\n{3,}/g, "\n\n"); // Reduce multiple newlines to max 2
+    str = str.trim(); // Remove leading/trailing whitespace
+    
+    // Replace newlines with HTML breaks
     return str.replace(/\n/g, "<br>");
   }
 
@@ -280,6 +283,22 @@ class Helper {
       
       if (!result) return null;
       
+      // Transform albums from topAlbums
+      const albums = (result.topAlbums || []).map(album => ({
+        title: album.name,
+        thumbnailUrl: album.thumbnails && album.thumbnails.length > 0 ? album.thumbnails[0].url : '',
+        year: album.releaseDate ? new Date(album.releaseDate).getFullYear() : 'Unknown',
+        albumId: album.albumId
+      }));
+
+      // Transform singles from topSingles  
+      const singles = (result.topSingles || []).map(single => ({
+        title: single.name,
+        thumbnailUrl: single.thumbnails && single.thumbnails.length > 0 ? single.thumbnails[0].url : '',
+        year: single.releaseDate ? new Date(single.releaseDate).getFullYear() : 'Unknown',
+        videoId: single.videoId
+      }));
+      
       // Transform new API format to old format
       return {
         name: result.name,
@@ -287,7 +306,9 @@ class Helper {
         thumbnailUrl: result.thumbnails && result.thumbnails.length > 0 ? 
           result.thumbnails.find(t => t.width >= 120)?.url || result.thumbnails[0].url : '',
         description: result.description || '',
-        subscribers: result.subscribers || 0
+        subscribers: result.subscribers || 0,
+        albums: albums,
+        singles: singles
       };
     } catch (error) {
       console.error(`Error getting artist with ID ${artistId}:`, error);

@@ -44,7 +44,7 @@ router.get("/artist-info", Authenticator.verifySoftToken, async (req, res) => {
   return res.render("artist-info", {
     thumbnail: artists[0].thumbnailUrl,
     artistInfo: artistInfo,
-    headerText: artistName,
+    headerText: `Artist: ${artistName}`,
     user: req.user,
     isFavorited,
   });

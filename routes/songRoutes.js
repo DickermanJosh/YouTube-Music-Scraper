@@ -107,7 +107,7 @@ router.get("/song-info", Authenticator.verifySoftToken, async (req, res) => {
     songInfo: songInfo,
     songLyrics: lyrics,
     youtubeId: youtubeId,
-    headerText: SONG_INFO_HEADER,
+    headerText: `${SONG_INFO_HEADER}: ${songTitle}`,
     user: req.user,
     isFavorited,
   });

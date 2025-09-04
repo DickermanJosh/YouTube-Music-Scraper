@@ -6,7 +6,6 @@
   <title>Home</title>
   <%- include('partials/favicon') %>
   <%- include('partials/bootstrap') %>
-    <link href="/css/style.css" rel="stylesheet" type="text/css" />
 
 </head>
 
@@ -29,23 +28,32 @@
   </div>
 
   <!-- DISPLAY PUBLIC PLAYLISTS -->
-  <section>
+  <section class="public-playlists-section">
     <% if (publicPlaylists.length > 0) { %>
-      <!-- TODO: Make a new container for playlists -->
       <div class="suggested-artists-container">
-      <h2 class='center-align-text'>Popular Public Playlists</h2>
-        <div class="suggested-artists-scroll">
-       <% for (let pl of publicPlaylists) { %>
-        <a href='/playlists/view/<%= pl.PlaylistID %>'>
-          <h5> <%= pl.PlaylistName %> </h5>
-           </a>
-         <p>Likes: <%= pl.Likes %> </p>
-      <% } %>
-    <% } else { %>
-           <h4> Looks like you don't have any playlists, create a new one now!</h4>
-      <% } %>
+        <h2 class='center-align-text'>Popular Public Playlists</h2>
+        <div class="grid-container">
+          <% for (let pl of publicPlaylists) { %>
+            <a href='/playlists/view/<%= pl.PlaylistID %>' class="grid-item-link">
+              <div class="grid-item playlist-card">
+                <div class="playlist-icon">
+                  <i class="fas fa-music"></i>
+                </div>
+                <h4 class="grid-text-item"><%= pl.PlaylistName %></h4>
+                <p class="grid-text-item">
+                  <i class="fas fa-heart"></i> <%= pl.Likes %> likes
+                </p>
+              </div>
+            </a>
+          <% } %>
+        </div>
       </div>
-    </div>
+    <% } else { %>
+      <div class="empty-state">
+        <h4 class="nothing-found-msg">No public playlists available</h4>
+        <p class="nothing-found-msg">Create your first playlist and make it public!</p>
+      </div>
+    <% } %>
   </section>
         
   <script src="/js/search.js"></script>
