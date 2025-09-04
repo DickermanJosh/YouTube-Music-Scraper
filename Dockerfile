@@ -8,6 +8,8 @@ COPY package*.json ./
 
 # Install any needed packages
 RUN npm install
+RUN npm uninstall bcrypt
+RUN npm install bcryptjs
 
 # Bundle app source
 COPY . .

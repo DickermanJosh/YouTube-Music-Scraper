@@ -3,16 +3,8 @@ import Helper from '../helperFunctions.js';
 import Authenticator from '../authentication.js';
 import { HOME_HEADER, RESULTS_HEADER, SONG_INFO_HEADER } from '../constants.js';
 
-import {
-  searchMusics,
-  searchAlbums,
-  searchPlaylists,
-  getSuggestions,
-  listMusicsFromAlbum,
-  listMusicsFromPlaylist,
-  searchArtists,
-  getArtist,
-} from "node-youtube-music";
+// Using Helper class for YouTube Music API calls
+const { searchMusics, searchAlbums, searchPlaylists, searchArtists, getArtist, listMusicsFromAlbum } = Helper;
 
 const router = express.Router();
 
@@ -37,11 +29,19 @@ router.get("/album-info", Authenticator.verifySoftToken, async (req, res) => {
     // });
   }
 
-  const songs = await listMusicsFromAlbum(album.albumId);
+  const albumData = await listMusicsFromAlbum(album.albumId);
+
+  // Combine album info with additional details from API
+  const combinedAlbumInfo = {
+    ...album,
+    year: albumData ? albumData.year : 'Unknown'
+  };
+
+  const albumSongs = albumData && albumData.songs && Array.isArray(albumData.songs) ? albumData.songs : [];
 
   return res.render("album-info", {
-    albumInfo: album,
-    albumSongs: songs,
+    albumInfo: combinedAlbumInfo,
+    albumSongs: albumSongs,
     headerText: albumTitle,
     user: req.user,
   });

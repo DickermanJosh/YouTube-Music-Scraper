@@ -19,12 +19,16 @@
   </section>
 
   <section class="songs-list">
-      <% for (let song of albumSongs) { %>
-        <div class="song-row">
-          <a href="/song-info?songTitle=<%= encodeURIComponent(song.title) %>&artistName=<%= encodeURIComponent(albumInfo.artist) %>&youtubeId=<%= song.youtubeId %>">
-            <span><%= song.title %></span> - <span><%= song.duration.label %></span>
-          </a>
-        </div>
+      <% if (albumSongs && Array.isArray(albumSongs) && albumSongs.length > 0) { %>
+        <% for (let song of albumSongs) { %>
+          <div class="song-row">
+            <a href="/song-info?songTitle=<%= encodeURIComponent(song.title) %>&artistName=<%= encodeURIComponent(albumInfo.artist) %>&youtubeId=<%= song.youtubeId %>">
+              <span><%= song.title %></span> - <span><%= song.duration.label %></span>
+            </a>
+          </div>
+        <% } %>
+      <% } else { %>
+        <p>No songs available for this album.</p>
       <% } %>
   </section>
   <script src="/js/search.js"></script>

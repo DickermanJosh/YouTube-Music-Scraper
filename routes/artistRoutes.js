@@ -4,16 +4,8 @@ import Helper from "../helperFunctions.js";
 import FavoriteArtistsDAO from "../DB/favoriteArtistDAO.js";
 import { HOME_HEADER, RESULTS_HEADER, SONG_INFO_HEADER } from "../constants.js";
 
-import {
-  searchMusics,
-  searchAlbums,
-  searchPlaylists,
-  getSuggestions,
-  listMusicsFromAlbum,
-  listMusicsFromPlaylist,
-  searchArtists,
-  getArtist,
-} from "node-youtube-music";
+// Using Helper class for YouTube Music API calls
+const { searchMusics, searchAlbums, searchPlaylists, searchArtists, getArtist, listMusicsFromAlbum } = Helper;
 
 const router = express.Router();
 
